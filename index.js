@@ -7,12 +7,14 @@ var Osu = new nodeosu.Api(Tokens.OsuApiKey, {
     notFoundAsError: true,
     completeScores: false
 });
-
 var Discord = new eris.CommandClient(Tokens.DiscordKey, {}, {
     "description": "A Bot Specifically Designed for Osu!India.",
     "owner": "Xav",
     "prefix": "!"
 });
+
+var sqlite3 = require('sqlite3');
+//var sqlcon = sqlite3.Database('Profiles.db');
 
 
 //UserProfile Command.
@@ -25,7 +27,7 @@ Discord.registerCommand("user", (msg, args) => {
 
 var useraliases = ['u', 'usr', 'profile', 'osu']
 useraliases.forEach(function(Alias) {
-    Discord.registerCommandAlias(Alias,"user");
+    await Discord.registerCommandAlias(Alias,"user");
 });
 
 
