@@ -1,138 +1,81 @@
-exports.FetchUser = function (Osu, Discord, msg, msgargs) {
+var embed = require('./embedCreator');
+exports.FetchUser = async function (Osu, Discord, msg, msgargs) {
     if (msgargs.length == 0) {
-        Discord.createMessage(msg.channel.id, {
-            embed: {
-                title: "You Idiot! Provide your Profile First!",
-                description: "Hmph! You should tell me your name first!",
-                color: 0xFF000A,
-                author: {
-                    name: msg.author.username,
-                    icon_url: msg.author.avatarURL
-                },
-                image: {
-                    url: 'https://imgur.com/a/suRVv6Q' //Tsundere Chitoge lmfao 
-                }
+        var em = new embed("You Idiot, Provide your profile first!", "Hmph! You should tell me your name first!");
+        em.withAuthor(msg.author.username, msg.author.avatarURL);
+        em.Withimg("https://i.imgur.com/F5FIC4T.jpg");
+        Discord.createMessage(msg.channel.id, em);
+    }
+    else {
+        msgargs.forEach(async function (user) {
+            try {
+                let Info = await Osu.getUser({ u: user });
+                var desc = `Rank:${Info.pp.rank}
+                **PP:${Info.pp.raw}**
+                Level:${Info.level}
+                Country:${Info.country}
+                CountryRank:${Info.pp.countryRank}
+                PlayCount:${Info.counts.plays}
+                Accuracy:${Info.accuracyFormatted}`;
+                var em = new embed(`Here's what you *probably* need...?`, desc);
+                em.withAuthor(user, `https://osu.ppy.sh/images/flags/${Info.country}.png`);
+                em.Withthumb(`https://a.ppy.sh/${Info.id}`);
+                Discord.createMessage(msg.channel.id, em);
+            }
+            catch (err) {
+                console.log(err);
+                var em = new embed("Apparently you don't exist!", "Atleast make sure you exist, you know?");
+                em.withAuthor(msg.author.username, msg.author.avatarURL);
+                em.Withimg('https://i.imgur.com/dtMkTAs.jpg');
+                Discord.createMessage(msg.channel.id, em);
             }
         });
     }
-    msgargs.forEach(user => {
-        try {
-            Osu.getUser({ u: user }).then(Info => {
-                Discord.createMessage(msg.channel.id, {
-                    embed: {
-                        title: `User Profile for: ${Info.name}`,
-                        description: `Rank:${Info.pp.rank}
-                                PP:${Info.pp.raw}
-                                Level:${Info.level}
-                                Country:${Info.country}
-                                CRank:${Info.pp.countryRank}
-                                PlayCount:${Info.counts.plays}
-                                Accuracy:${Info.accuracyFormatted}`,
-                        color: 0xFF000A,
-                        author: {
-                            name: msg.author.username,
-                            icon_url: msg.author.avatarURL
-                        },
-                        thumbnail: {
-                            url: `https://a.ppy.sh/${Info.id}`
-                        }
-
-                    }
-                });
-            })
-        }
-        catch (err) {
-            Discord.createMessage(msg.channel.id, {
-                embed: {
-                    title: "Apparently you don't exist!",
-                    description: "Atleast make sure you exist, you know?",
-                    color: 0xFF000A,
-                    author: {
-                        name: msg.author.username,
-                        icon_url: msg.author.avatarURL
-                    },
-                    image: {
-                        url: 'https://imgur.com/a/X10WWpx' //Mad expression
-                    }
-                }
-            });
-        }
-    });
 }
 
 
 exports.GetUserScores = async function (Osu, Discord, msg, msgargs) {
     if (msgargs.length == 0) {
-        Discord.createMessage(msg.channel.id, {
-            embed: {
-                title: "You Idiot! Provide your Profile First!",
-                description: "How do I tell your Score without you?",
-                color: 0xFF000A,
-                author: {
-                    name: msg.author.username,
-                    icon_url: msg.author.avatarURL
-                },
-                image: {
-                    url: 'https://i.imgur.com/F5FIC4T.jpg' //Tsundere Chitoge lmfao 
-                }
-            }
-        });
+        var em = new embed("You Idiot, Provide your profile first!", "I can't tell a nobodies profile out of the blue!");
+        em.withAuthor(msg.author.username, msg.author.avatarURL);
+        em.Withimg("https://i.imgur.com/F5FIC4T.jpg");
+        Discord.createMessage(msg.channel.id, em);
     }
-    try {
-        msgargs.forEach(user => {
-            Osu.getUserBest({ u: user, m: '0'}).then(Info => {
-                var desc;
-                Info.forEach(element => {
-                    Osu.getBeatmaps({b: Info.beatmapId}).then(beatmapInfo => {
-                        desc += `${beatmapInfo.title}[${beatmapInfo.version}]}
-                        PP: ${Info.pp} | Combo:${Info.maxCombo}/${beatmapInfo.maxCombo}| Akkoracy here`
-                    })
-                });
-                Discord.createMessage(msg.channel.id, {
-                    embed:{
-                        title: `Unimpressive best scores for ${Info.name}.`,
-                        description: desc,
-                        color: 0xFF000A,
-                        author: {
-                            name: msg.author.username,
-                            icon_url: msg.author.avatarURL
-                        }
-                    }
-                })
-            })
-        })
-        let usersBest = await Osu.getUserBest()
-    }
-    catch (err) {
-        console.log(err)
-        Discord.createMessage(msg.channel.id, {
-            embed: {
-                title: "Apparently you don't exist!",
-                description: "Atleast make sure you exist, you know?",
-                color: 0xFF000A,
-                author: {
-                    name: msg.author.username,
-                    icon_url: msg.author.avatarURL
-                },
-                image: {
-                    url: 'https://i.imgur.com/dtMkTAs.jpg' //Mad expression
-                }
-            }
-        });
+    else {
+        try {
+            msgargs.forEach(async function (user) {
+                let UserBest = await Osu.getUserBest({ u: user, m: '0', limit: 5 });
+                var desc = "";
+                for (element of UserBest) {
+                    let beatmapInfo = await Osu.getBeatmaps({ b: element.beatmapId })
+                    desc += `${beatmapInfo[0].title}[${beatmapInfo[0].version}]+${ParseDiff()}
+                        PP: ${element.pp} | Combo:${element.maxCombo}/${beatmapInfo[0].maxCombo}| Akkoracy here\n`;
+                };
+                var em = new embed(`Unimpressive best scores for ${user}`, desc);
+                em.withAuthor(user, `https://a.ppy.sh/${UserBest[0].user.id}`);
+                Discord.createMessage(msg.channel.id, em);
+            });
+        }
+        catch (err) {
+            var em = new embed("Apparently, you don't exist!", "Atleast make sure you exist, you know?");
+            em.withAuthor(msg.author.username, msg.author.avatarURL);
+            em.Withimg('https://i.imgur.com/dtMkTAs.jpg');
+            Discord.createMessage(msg.channel.id, em);
+        }
     }
 }
 
-function ParseDiff(DiffArr){
+function ParseDiff(DiffArr) {
     var ProcArr;
-    if(DiffArr.length == 0)
+    if (DiffArr.length == 0)
         ProcArr.push("NoMod");
     DiffArr.forEach(Diff => {
-        switch(Diff){
+        switch (Diff) {
             case "Hidden": push("HD");
             case "HardRock": push("HR");
             case "DoubleTime": push("DT");
             case "Hidden": push("HD");
-            case "Easy" : push("EZ");
+            case "Easy": push("EZ");
         }
     })
     return ProcArr.join("");
