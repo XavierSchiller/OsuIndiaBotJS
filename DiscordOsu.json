@@ -1,0 +1,22 @@
+{
+    "Commands": [
+        {
+            "Name": "Profile",
+            "Alias": [
+                "u",
+                "user"
+            ],
+            "Function": "FetchUser",
+            "Desc":""
+        },
+        {
+            "Name": "Top",
+            "Alias": [
+                "best",
+                "top"
+            ],
+            "Function": "FetchUser",
+            "Desc":""
+        }
+    ]
+}

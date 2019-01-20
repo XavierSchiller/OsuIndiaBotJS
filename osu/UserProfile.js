@@ -11,12 +11,12 @@ module.exports = async function GetUserScores(Osu, Discord, msg, msgargs) {
             try {
                 let Info = await Osu.getUser({ u: user });
                 var desc = `Rank:${Info.pp.rank}
-                **PP:${Info.pp.raw}**
-                Level:${Info.level}
-                Country:${Info.country}
-                CountryRank:${Info.pp.countryRank}
-                PlayCount:${Info.counts.plays}
-                Accuracy:${Info.accuracyFormatted}`;
+                            **PP:${Info.pp.raw}**
+                            Level:${Info.level}
+                            Country:${Info.country}
+                            CountryRank:${Info.pp.countryRank}
+                            PlayCount:${Info.counts.plays}
+                            Accuracy:${Info.accuracyFormatted}`;
                 var em = new embed(`Here's what you *probably* need...?`, desc);
                 em.withAuthor(user, `https://osu.ppy.sh/images/flags/${Info.country}.png`);
                 em.Withthumb(`https://a.ppy.sh/${Info.id}`);
