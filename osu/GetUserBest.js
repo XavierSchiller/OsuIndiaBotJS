@@ -1,31 +1,58 @@
 var embed = require('../embedCreator');
-module.exports = async function GetUserScores(Osu, Discord, msg, msgargs) {
+
+
+module.exports = async function GetUserScores(/*DiscordOsu*/ Osu, Discord, msg, msgargs, db) {
     if (msgargs.length == 0) {
-        var em = new embed("You Idiot, Provide your profile first!", "I can't tell a nobodies profile out of the blue!");
-        em.withAuthor(msg.author.username, msg.author.avatarURL);
-        em.Withimg("https://i.imgur.com/F5FIC4T.jpg");
-        Discord.createMessage(msg.channel.id, em);
+        var result;
+        await db.get("SELECT OsuUsername from USERS WHERE userID = ?", msg.author.id, async (err, row) => {
+            if (!err)
+                result = await getData(Osu,row.OsuUsername)
+            else
+                result = "Please Enter a User"
+            Discord.createMessage(msg.channel.id, result);
+        });
     }
     else {
         try {
             msgargs.forEach(async function (user) {
-                let UserBest = await Osu.getUserBest({ u: user, m: '0', limit: 5 });
-                var desc = "";
-                for (element of UserBest) {
-                    let beatmapInfo = await Osu.getBeatmaps({ b: element.beatmapId })
-                    desc += `${beatmapInfo[0].title}[${beatmapInfo[0].version}]+${ParseDiff()}
-                        PP: ${element.pp} | Combo:${element.maxCombo}/${beatmapInfo[0].maxCombo}| Akkoracy here\n`;
-                };
-                var em = new embed(`Unimpressive best scores for ${user}`, desc);
-                em.withAuthor(user, `https://a.ppy.sh/${UserBest[0].user.id}`);
+                var em = await getData(Osu,user);
                 Discord.createMessage(msg.channel.id, em);
             });
         }
         catch (err) {
-            var em = new embed("Apparently, you don't exist!", "Atleast make sure you exist, you know?");
-            em.withAuthor(msg.author.username, msg.author.avatarURL);
-            em.Withimg('https://i.imgur.com/dtMkTAs.jpg');
-            Discord.createMessage(msg.channel.id, em);
+            Discord.createMessage(msg.channel.id,"Something went wrong...")
         }
     }
+}
+
+async function getData(Osu, user) {
+    let UserBest = await Osu.getUserBest({ u: user, m: '0', limit: 5 });
+    var desc = "";
+    for (element of UserBest) {
+        let beatmapInfo = await Osu.getBeatmaps({ b: element.beatmapId })
+        desc += `**${beatmapInfo[0].title}[${beatmapInfo[0].version}]**${ParseDiff(beatmapInfo[0].mods.toString().substring(0, 4))}\n` +
+            `**PP: ${element.pp}** | Combo:**${element.maxCombo}**/${beatmapInfo[0].maxCombo}|Acc:${ParseAcc(element.counts)}\n`;
+    };
+    var em = new embed(`Unimpressive best scores for ${user}`, desc);
+    em.withAuthor(user, `https://a.ppy.sh/${UserBest[0].user.id}`);
+    return em;
+}
+
+function ParseDiff(DiffString) {
+    var str = "+";
+    if (typeof DiffString == 'undefined')
+        return "+NoMod";
+    DiffString.forEach((Diff) => {
+        switch (Diff) {
+            case "Hidden": str += "HD"; break;
+            case "HardRock": str += "HR"; break;
+            case "DoubleTime": str += "DT"; break;
+            case "Flashlight": str += "FL"; break;
+        }
+    });
+}
+
+function ParseAcc(accValues) {
+    const total = parseInt(accValues['50']) + parseInt(accValues['100']) + parseInt(accValues['300']) + parseInt(accValues['miss']);
+    return ((parseInt(accValues['300']) * 300 + parseInt(accValues['100']) * 100 + parseInt(accValues['50']) * 50) / (total * 300)) * 100;
 }

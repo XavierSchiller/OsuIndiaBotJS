@@ -1,9 +1,10 @@
-var Tokens = require('./config.json')
-var nodeosu = require('node-osu')
-var embed = require('./embedCreator')
-var Osu = new nodeosu.Api(Tokens.OsuApiKey, {
-    notFoundAsError: true,
-    completeScores: false
-});
+var sqlconn = require('sqlite3');
 
-var disc = require('./osu');
+var db = new sqlconn.Database('Info.db', (err) => {
+    if (err === 'undefined')
+        console.log("Database Did not open, Please restart the program!")
+    else {
+        db.run("CREATE TABLE IF NOT EXISTS USERS(userID int, OsuUsername text)");
+        console.log("Table Created!")
+    }
+});
