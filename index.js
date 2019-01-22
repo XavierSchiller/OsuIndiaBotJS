@@ -19,7 +19,7 @@ var Discord = new eris.CommandClient(Tokens.DiscordKey, {
 }, {
         "description": "A Bot Specifically Designed for Osu!India.",
         "owner": "Xav",
-        "prefix": "!"
+        "prefix": "`"
     });
 
 Mods.fkeys.forEach((func) => {

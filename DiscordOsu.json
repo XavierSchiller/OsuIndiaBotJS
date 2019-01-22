@@ -19,16 +19,18 @@
         "ShortDesc": "Fetches the Best Plays of a given user.",
         "LongDesc": "What Long Desc?",
         "ErrorMessage": "Wha' did ya do?",
-        "Usage": "GetUserBest user1 user2"
+        "Usage": "top user1 user2"
     },
     "GetRecent": {
         "Alias": [
-            "recent"
+            "recent",
+            "rs",
+            "r"
         ],
         "ShortDesc": "Fetches the Best Plays of a given user.",
         "LongDesc": "What Long Desc?",
         "ErrorMessage": "Wha' did ya do?",
-        "Usage": "GetUserBest user1 user2"
+        "Usage": "rs user1 user2"
     },
     "setUser": {
         "Alias": [
@@ -37,6 +39,6 @@
         "ShortDesc": "Fetches the Best Plays of a given user.",
         "LongDesc": "What Long Desc?",
         "ErrorMessage": "Wha' did ya do?",
-        "Usage": "GetUserBest user1 user2"
+        "Usage": "set user1"
     }
 }

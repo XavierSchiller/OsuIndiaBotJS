@@ -11,7 +11,7 @@ module.exports = async function setUser(Osu, Discord, msg, msgargs, db) {
         (err) => {
             console.log(err);
             if (!err)
-                Discord.createMessage(msg.channel.id, "Your ID has been registered");
+                Discord.createMessage(msg.channel.id, "Your ID has been registered.");
             else
                 Discord.createMessage(msg.channel.id, "You've already set your ID!");
         });
