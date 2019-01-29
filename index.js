@@ -36,6 +36,9 @@ Mods.fkeys.forEach((func) => {
 
 Discord.on('ready', () => {
     console.log("Ready!");
+    // setInterval(function () {
+    //     Mods.Callfunc('feed', Osu, Discord, null, null, db)
+    // }, 5000);
 });
 
 var db = new sqlconn.Database('Info.db', (err) => {
@@ -43,7 +46,8 @@ var db = new sqlconn.Database('Info.db', (err) => {
         console.log("Database Did not open, Please restart the program!")
     else {
         db.run("CREATE TABLE IF NOT EXISTS USERS(userID text PRIMARY KEY NOT NULL, OsuUsername text NOT NULL)");
-        console.log("Table Created!")
+        db.run("CREATE TABLE IF NOT EXISTS CHANNELS(ID text PRIMARY KEY NOT NULL)")
+        console.log("Tables Created!")
         Discord.connect();
     }
 });

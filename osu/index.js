@@ -1,6 +1,8 @@
 module.exports = {
     FetchUser: require('./UserProfile'),
     GetUserBest: require('./GetUserBest'),
-    GetRecent: require('./GetRecent'),
-    setUser: require('./setUser')
+    GetRecent: require('./GetRecent').GetRecent,
+    setUser: require('./setUser'),
+    setChannel:require('./setChannel'),
+    feed: require('./feed')
 };

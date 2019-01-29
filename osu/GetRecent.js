@@ -1,7 +1,7 @@
 var embed = require('../embedCreator');
 var util = require('./utils');
 
-module.exports = async function GetRecent(Osu, Discord, msg, msgargs,db) {
+module.exports.GetRecent = async function GetRecent(Osu, Discord, msg, msgargs,db) {
     if (msgargs.length == 0) {
         var result;
         await db.get("SELECT OsuUsername from USERS WHERE userID = ?", msg.author.id, async (err, row) => {
@@ -27,7 +27,7 @@ module.exports = async function GetRecent(Osu, Discord, msg, msgargs,db) {
     }
 }
 
-async function GetUserScores(Osu, user) {
+module.exports.userScores = async function GetUserScores(Osu, user) {
     var Scores = await Osu.getUserRecent({u: user,limit: 1});
     var Beatmapinfo = await Osu.getBeatmaps({b:Scores[0].beatmapId});
     var desc = `${Beatmapinfo[0].title}+[${Beatmapinfo[0].version}]${util.ParseDiff(Scores[0].mods)}\n`;

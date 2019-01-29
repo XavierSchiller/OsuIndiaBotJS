@@ -40,5 +40,19 @@
         "LongDesc": "What Long Desc?",
         "ErrorMessage": "Wha' did ya do?",
         "Usage": "set user1"
+    },
+    "setChannel": {
+        "Alias": [
+            "setc"
+        ],
+        "ShortDesc":"Sets channel for Displaying the current data!",
+        "LongDesc":"What Long Desc?",
+        "Usage":"setc user1"
+    },
+    "feed":{
+        "Alias": [],
+        "ShortDesc":"",
+        "LongDesc":"What Long Desc?",
+        "Usage":"---"
     }
 }
