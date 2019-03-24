@@ -4,16 +4,20 @@ module.exports = async function setUser(Osu, Discord, msg, msgargs, db) {
 	var userID = msg.author.id;
 	var osuUserName = msgargs[0];
 	if (msgargs.length === 0) {
-		sendstr = "Enter a name for registering.";
+		sendstr = new embed("Username error", "Enter a name for setting.");
 	}
 	db.find({
 		user: osuUserName
 	}, (err, docs) => {
-		if (docs.length > 0) sendstr = "You've Already Set your Name!";
-		else {
+		if (docs.length > 0) {
+			sendstr = new embed("Username Confirmation", "Name has been set.")
+		} else {
 			sendstr = "Nameset!";
+			db.insert({
+				discordID: msg.author.id,
+				OsuID: osuUserName
+			})
 		}
 	});
-	var em = new embed("Username Confirmation.", sendstr);
-	Discord.createMessage(msg.channel.id, em.construct());
+	Discord.createMessage(msg.channel.id, sendstr);
 };

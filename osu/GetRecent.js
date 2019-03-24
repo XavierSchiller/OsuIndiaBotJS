@@ -34,8 +34,8 @@ async function GetUserScores(Osu, user) {
 		var Beatmapinfo = await Osu.getBeatmaps({
 			b: Scores[0].beatmapId
 		});
-	} catch(err) {
-		return new embed("Something Went Wrong",`Error Description:${err}`);
+	} catch (err) {
+		return new embed("Something Went Wrong", `Error Description:${err}`);
 	}
 	var desc = `${Beatmapinfo[0].title}+[${Beatmapinfo[0].version}]${util.ParseDiff(Scores[0].mods)}\n`;
 	desc += `${Scores[0].maxCombo}/${Beatmapinfo[0].maxCombo} | Acc: ${util.ParseAcc(Scores[0].counts)}%`
