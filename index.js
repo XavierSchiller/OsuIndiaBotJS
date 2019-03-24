@@ -36,9 +36,6 @@ Mods.fkeys.forEach((func) => {
 
 Discord.on('ready', () => {
     console.log("Ready!");
-    // setInterval(function () {
-    //     Mods.Callfunc('feed', Osu, Discord, null, null, db)
-    // }, 5000);
 });
 
 
