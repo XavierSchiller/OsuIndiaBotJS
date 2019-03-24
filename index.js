@@ -3,8 +3,8 @@ var nodeosu = require('node-osu');
 var ModL = require('./ML');
 var eris = require('eris');
 var CmdConf = require('./DiscordOsu.json');
-var sqlconn = require('sqlite3');
-
+var nedb = require('nedb'),
+    db = new nedb({filename:'./Info.db'});
 
 
 var Mods = new ModL.ModuleLoader('./osu');
@@ -41,13 +41,11 @@ Discord.on('ready', () => {
     // }, 5000);
 });
 
-var db = new sqlconn.Database('Info.db', (err) => {
-    if (err === 'undefined')
-        console.log("Database Did not open, Please restart the program!")
-    else {
-        db.run("CREATE TABLE IF NOT EXISTS USERS(userID text PRIMARY KEY NOT NULL, OsuUsername text NOT NULL)");
-        db.run("CREATE TABLE IF NOT EXISTS CHANNELS(ID text PRIMARY KEY NOT NULL)")
-        console.log("Tables Created!")
+
+db.loadDatabase(function(err){
+    if(!err)
+        db.ensureIndex({fieldName:'OsuID',unique:true});
+        db.ensureIndex({fieldName:'discordID',unique:true})
+        console.log("Database is Loaded!");
         Discord.connect();
-    }
 });

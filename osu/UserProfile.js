@@ -1,28 +1,26 @@
 var embed = require('../embedCreator');
 module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
     if (msgargs.length == 0) {
-        var result;
-        await db.get("SELECT OsuUsername from USERS WHERE userID = ?", msg.author.id, async (err, row) => {
-            if (!err)
-                result = await GetUserData(Osu,row.OsuUsername)
-            else
-                result = "Please Enter a User"
-            Discord.createMessage(msg.channel.id, result);
-        });
-
-        return 0;
+        db.find({DiscordId:msg.author.id}, async function(err,docs){
+            if(!err && docs)
+            {
+                var result = await GetUserData(Osu,docs.username);
+            }
+            Discord.createMessage(msg.channel.id,result);
+        })
     }
-
-    msgargs.forEach(async function (user) {
-        try {
-            var em = await GetUserData(Osu, user);
-            Discord.createMessage(msg.channel.id, em);
-        }
-        catch (err) {
-            console.log(err);
-            Discord.createMessage(msg.channel.id, "Something Went Wrong...");
-        }
-    });
+    else {
+        msgargs.forEach(async function (user) {
+            try {
+                var em = await GetUserData(Osu, user);
+                Discord.createMessage(msg.channel.id, em);
+            }
+            catch (err) {
+                console.log(err);
+                Discord.createMessage(msg.channel.id, "User Doesn't exist!");
+            }
+        });
+    }
 }
 
 async function GetUserData(Osu, user) {
