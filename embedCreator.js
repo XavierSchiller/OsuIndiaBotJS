@@ -5,6 +5,12 @@ class embed {
 		this.embed.description = desc;
 		this.embed.color = 0xff000a;
 	}
+	withTitle(title) {
+		this.embed.title = title;
+	}
+	withDesc(Desc) {
+		this.embed.description = Desc;
+	}
 	withAuthor(name, avatarUrl) {
 		this.embed.author = {};
 		this.embed.author.name = name;
