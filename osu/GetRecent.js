@@ -9,7 +9,7 @@ module.exports.GetRecent = async function GetRecent(Osu, Discord, msg, msgargs, 
 		//Searching for username
 		db.find({
 			discordID: msg.author.id
-		}, (err, docs) => {
+		}, async (err, docs) => {
 			//if found, then docs is not empty
 			if (docs.length == 0) {
 				res = new embed("Recent Scores", "You were not found in the database, set your username.");
@@ -19,20 +19,28 @@ module.exports.GetRecent = async function GetRecent(Osu, Discord, msg, msgargs, 
 		})
 	} else {
 		var username = msgargs[0];
+		res = await GetUserScores(Osu, username);
 	}
-	Discord.sendMessage(msg.channel.id, res.construct())
+	Discord.createMessage(msg.channel.id, res)
 }
 
-module.exports.userScores = async function GetUserScores(Osu, user) {
-	var Scores = await Osu.getUserRecent({
-		u: user,
-		limit: 1
-	});
-	var Beatmapinfo = await Osu.getBeatmaps({
-		b: Scores[0].beatmapId
-	});
+async function GetUserScores(Osu, user) {
+	console.log(user);
+	try {
+		var Scores = await Osu.getUserRecent({
+			u: user,
+			limit: 1
+		});
+		var Beatmapinfo = await Osu.getBeatmaps({
+			b: Scores[0].beatmapId
+		});
+	} catch(err) {
+		return new embed("Something Went Wrong",`Error Description:${err}`);
+	}
 	var desc = `${Beatmapinfo[0].title}+[${Beatmapinfo[0].version}]${util.ParseDiff(Scores[0].mods)}\n`;
 	desc += `${Scores[0].maxCombo}/${Beatmapinfo[0].maxCombo} | Acc: ${util.ParseAcc(Scores[0].counts)}%`
 	var em = new embed("Recent Score for" + user, desc)
 	return em;
 }
+
+module.exports.userScores = GetUserScores;
