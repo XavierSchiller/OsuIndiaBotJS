@@ -24,11 +24,15 @@ module.exports = async function GetUserScores( /*DiscordOsu*/ Osu, Discord, msg,
 }
 
 async function getData(Osu, user) {
-	let UserBest = await Osu.getUserBest({
-		u: user,
-		m: '0',
-		limit: 5
-	});
+	try {
+		let UserBest = await Osu.getUserBest({
+			u: user,
+			m: '0',
+			limit: 5
+		});
+	} catch (err) {
+		return em = new embed("Something Went Wrong", `${err}`);
+	}
 	var desc = "";
 	for (element of UserBest) {
 		let beatmapInfo = await Osu.getBeatmaps({
