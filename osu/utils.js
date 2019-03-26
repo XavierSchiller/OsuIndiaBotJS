@@ -18,6 +18,8 @@ module.exports.ParseDiff = function ParseDiff(DiffString) {
 				break;
 		}
 	});
+	if(str === "+")
+		return "";
 	return str;
 }
 

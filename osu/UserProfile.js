@@ -29,13 +29,13 @@ async function GetUserData(Osu, user) {
 
 	/*Constructing the Description*/
 
-	var desc = `Rank:${Info.pp.rank}\n`;
-	desc += `**PP:${Info.pp.raw}\n`;
-	desc += `Level:${Info.level}\n`;
-	desc += `Country:${Info.country}\n`;
-	desc += `CountryRank:${Info.pp.countryRank}\n`;
-	desc += `PlayCount:${Info.counts.plays}\n`;
-	desc += `Accuracy:${Info.accuracyFormatted}n`;
+	var desc = `Rank:${Info.pp.rank}\n 
+	**PP:${Info.pp.raw}\n** 
+	Level:${Info.level}\n  
+	Country:${Info.country}\n  
+	CountryRank:${Info.pp.countryRank}\n 
+	PlayCount:${Info.counts.plays}\n 
+	Accuracy:${Info.accuracyFormatted}`;
 
 	var em = new embed(`Here's what you *probably* need...?`, desc);
 
