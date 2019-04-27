@@ -1,5 +1,8 @@
-var embed = require('../embedCreator');
-var util = require('./utils');
+const embed = require('../embedCreator');
+const util = require('./utils');
+
+import condense from "./utils";
+
 
 module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
 	if (msgargs.length == 0) {
@@ -20,7 +23,11 @@ module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
 				Discord.createMessage(msg.channel.id, em);
 			});
 		} catch (err) {
-			Discord.createMessage(msg.channel.id, "Something went wrong...")
+			try {
+				Discord.createMessage(msg.channel.id, "Something went wrong...")
+			} catch (err) {
+				//Replace with Logger Class here.
+			}
 		}
 	}
 }
@@ -35,15 +42,25 @@ async function getData(Osu, user) {
 
 	var desc = "";
 	for (element of UserBest) {
+		//get beatmap information for the maps.
 		let beatmapInfo = await Osu.getBeatmaps({
 			b: element.beatmapId
 		})
-		desc += `**[${beatmapInfo[0].title} [${beatmapInfo[0].version}]](https://osu.ppy.sh/b/${element.beatmapId})**`
-		desc += `${util.ParseDiff(element.mods)} [${beatmapInfo[0].difficulty.rating.substring(0,4)}\u2605]\n`
-		desc += `**PP: ${element.pp}** \u2b95 ${util.ParseAcc(element.counts)}%\n`
-		desc += `${element.score} \u2b95 x${element.maxCombo}/${beatmapInfo[0].maxCombo} \u2b95`
-		desc += `[${element.counts['300']}/${element.counts['100']}/${element.counts['50']}/${element.counts.miss}]\n`;
+
+		//Add to the description.
+		desc += condense("\n",
+			`**[${beatmapInfo[0].title} [${beatmapInfo[0].version}]](https://osu.ppy.sh/b/${element.beatmapId})**`,
+			`**${util.ParseDiff(element.mods)}** [${beatmapInfo[0].difficulty.rating.substring(0, 4)}\u2605]\n`,
+			`**PP: ${element.pp}** \u2b95 ${util.ParseAcc(element.counts)}%\n`,
+			`${element.score} \u2b95 x${element.maxCombo}/${beatmapInfo[0].maxCombo} \u2b95`,
+			`[${element.counts['300']}/${element.counts['100']}/${element.counts['50']}/${element.counts.miss}]\n`);
 	};
+
+	//if the description is empty then throw error
+	if (desc === "")
+		throw "Description is empty!";
+
+	//Create embed and send back.
 	var em = new embed("", desc);
 	em.withAuthor(`Top 5 osu! Plays for: ${user}`, `https://a.ppy.sh/${UserBest[0].user.id}`);
 	em.Withthumb(`https://a.ppy.sh/${UserBest[0].user.id}`)

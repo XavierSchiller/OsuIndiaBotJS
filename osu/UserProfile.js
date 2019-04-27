@@ -1,4 +1,6 @@
-var embed = require('../embedCreator');
+import condense from "./utils"
+
+const embed = require('../embedCreator');
 module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
 	if (msgargs.length == 0) {
 		db.find({
@@ -28,14 +30,14 @@ async function GetUserData(Osu, user) {
 	});
 
 	/*Constructing the Description*/
-
-	var desc = `Rank:${Info.pp.rank}\n 
-	**PP:${Info.pp.raw}\n** 
-	Level:${Info.level}\n  
-	Country:${Info.country}\n  
-	CountryRank:${Info.pp.countryRank}\n 
-	PlayCount:${Info.counts.plays}\n 
-	Accuracy:${Info.accuracyFormatted}`;
+	var desc = condense("\n",
+		`Rank:${Info.pp.rank}`,
+		`**PP:${Info.pp.raw}*`,
+		`Level:${Info.level}`,
+		`Country:${Info.country}`,
+		`CountryRank:${Info.pp.countryRank}`,
+		`PlayCount:${Info.counts.plays}`,
+		`Accuracy:${Info.accuracyFormatted}`)
 
 	var em = new embed(`Here's what you *probably* need...?`, desc);
 
