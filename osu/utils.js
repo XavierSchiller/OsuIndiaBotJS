@@ -18,7 +18,7 @@ module.exports.ParseDiff = function ParseDiff(DiffString) {
 				break;
 		}
 	});
-	if(str === "+")
+	if (str === "+")
 		return "";
 	return str;
 }
@@ -28,3 +28,20 @@ module.exports.ParseAcc = function ParseAcc(accValues) {
 	var acc = ((parseInt(accValues['300']) * 300 + parseInt(accValues['100']) * 100 + parseInt(accValues['50']) * 50) / (total * 300)) * 100;
 	return acc.toString().substring(0, 4);
 }
+
+function condense(delim, ...strings) {
+	//Set delimiter as new line if not defined
+	if (!delim)
+		delim = "\n";
+
+	//For each in strings, append the string with the delmiter.
+	var constring = ""
+	strings.forEach(str => {
+		constring += str + delim;
+	});
+
+
+	return constring;
+}
+
+console.log(condense("", "BBB", "ACCCCC", "DDDDDD", "EEEE"))
