@@ -1,7 +1,12 @@
 module.exports.ParseDiff = function ParseDiff(DiffString) {
-	var str = "+";
+	//If there's nothing in the Diffstring.
 	if (!DiffString)
 		return "+NoMod";
+
+	//Set the string to add the "+" by default
+	var str = "+";
+
+	//For all of the cases in the diffstring -- TO BE ADDED TO
 	DiffString.forEach((Diff) => {
 		switch (Diff) {
 			case "Hidden":
@@ -18,15 +23,22 @@ module.exports.ParseDiff = function ParseDiff(DiffString) {
 				break;
 		}
 	});
-	if (str === "+")
-		return "";
+
+	//constructed string.
 	return str;
 }
 
 module.exports.ParseAcc = function ParseAcc(accValues) {
+	//total is the sum of all the notes played.
 	const total = parseInt(accValues['50']) + parseInt(accValues['100']) + parseInt(accValues['300']) + parseInt(accValues['miss']);
+	
+	//Values from the user is then converted to float.
 	var acc = ((parseInt(accValues['300']) * 300 + parseInt(accValues['100']) * 100 + parseInt(accValues['50']) * 50) / (total * 300)) * 100;
-	return acc.toString().substring(0, 4);
+	
+	//Trim the substring to less than four significant digits.
+	acc = acc.toString().substring(0,4)
+	
+	return acc;
 }
 
 function condense(delim, ...strings) {
@@ -43,5 +55,3 @@ function condense(delim, ...strings) {
 
 	return constring;
 }
-
-console.log(condense("", "BBB", "ACCCCC", "DDDDDD", "EEEE"))
