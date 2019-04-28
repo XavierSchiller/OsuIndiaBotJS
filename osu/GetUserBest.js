@@ -2,31 +2,33 @@ const embed = require('../embedCreator');
 const utils = require('./utils');
 
 
+
 module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
-    if (msgargs.length == 0) {
-        var result;
-        await db.find({
+    var em = null;
+    if (msgargs.length === 0) {
+        db.find({
             discordID: msg.author.id
         }, async function(err, docs) {
-            if (!err)
-                result = await getData(Osu, docs[0].OsuUsername)
-            else
-                result = "Please Enter a User";
-            console.log(result);
-            Discord.createMessage(msg.channel.id, result);
+            if (!err || !docs) {
+                procUser(docs[0].OsuID, Osu, Discord, msg.channel.id)
+            } else
+                Discord.createMessage(msg.channel.id, "You did not set your ID!")
         });
-    }
-    try {
-        var em = await getData(Osu, msgargs[0]);
-        Discord.createMessage(msg.channel.id, em);
-    } catch (err) {
-        Discord.createMessage(msg.channel.id, `Something went wrong: ${err}`)
-    }
+    } else
+        procUser(msgargs[0], Osu, Discord, msg.channel.id)
+}
 
+async function procUser(username, Osu, Discord, channelID) {
+    try {
+        var em = await getData(Osu, username);
+        Discord.createMessage(channelID, em);
+    } catch (err) {
+        Discord.createMessage(channelID, `Something went wrong: ${err}`)
+    }
 }
 
 async function getData(Osu, user) {
-
+    console.log(user)
     var UserBest = await Osu.getUserBest({
         u: user,
         m: '0',
