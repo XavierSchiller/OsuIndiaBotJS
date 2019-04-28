@@ -4,11 +4,10 @@ const utils = require('./utils');
 
 
 module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
-    var em = null;
     if (msgargs.length === 0) {
         db.find({
             discordID: msg.author.id
-        }, async function(err, docs) {
+        }, function(err, docs) {
             if (!err || !docs) {
                 procUser(docs[0].OsuID, Osu, Discord, msg.channel.id)
             } else
@@ -28,7 +27,6 @@ async function procUser(username, Osu, Discord, channelID) {
 }
 
 async function getData(Osu, user) {
-    console.log(user)
     var UserBest = await Osu.getUserBest({
         u: user,
         m: '0',
