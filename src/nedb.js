@@ -1,6 +1,6 @@
 var nedb = require("nedb"),
     db = new nedb({
-        filename: "./Info.db"
+        filename: "../var/Info.db"
     });
 
 db.loadDatabase(function(err) {

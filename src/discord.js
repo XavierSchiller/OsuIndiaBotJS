@@ -1,4 +1,4 @@
-var Tokens = require("./config.json");
+var Tokens = require("../config/config.json");
 
 var eris = require("eris");
 
