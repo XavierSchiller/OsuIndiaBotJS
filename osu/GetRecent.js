@@ -2,28 +2,18 @@ var embed = require('../embedCreator');
 var util = require('./utils');
 
 module.exports.GetRecent = async function GetRecent(Osu, Discord, msg, msgargs, db) {
-    //To Get the recent scores of the given User.
-    var res;
     if (msgargs.length == 0) {
-        //What happens when there's no username specified.
-        //Searching for username
         db.find({
             discordID: msg.author.id
-        }, async(err, docs) => {
-            //if found, then docs is not empty
-            if (docs.length == 0) {
-                res = new embed("Recent Scores", "You were not found in the database, set your username.");
-                Discord.createMessage(msg.channel.id, res)
-            } else {
-                res = await GetUserScores(Osu, docs[0].OsuID);
-                Discord.createMessage(msg.channel.id, res)
-            }
+        }, function(err, docs) {
+            if (!err || !docs)
+                utils.procUser(Osu, Discord, username, channelID, GetUserScores)
+            else
+                Discord.createMessage(msg.channel.id, "Havent Set your ID!")
         })
     } else {
-        var username = msgargs[0];
-        res = await GetUserScores(Osu, username);
-        Discord.createMessage(msg.channel.id, res)
-    }
+        utils.procUser(Osu, Discord, username, channelID, GetUserScores)
+    };
 }
 
 async function GetUserScores(Osu, user) {
