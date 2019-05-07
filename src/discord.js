@@ -1,14 +1,16 @@
-var Tokens = require("../config/config.json");
+const Tokens = require('../config/config.json');
 
-var eris = require("eris");
+const eris = require('eris');
 
-var Discord = new eris.CommandClient(
-    Tokens.DiscordKey, {
-        autoreconnect: true
-    }, {
-        description: "A Bot Specifically Designed for Osu!India.",
-        owner: "Xav",
-        prefix: "`"
+const Discord = new eris.CommandClient(
+    Tokens.DiscordKey,
+    {
+      autoreconnect: true,
+    },
+    {
+      description: 'A Bot Specifically Designed for Osu!India.',
+      owner: 'Xav',
+      prefix: '`',
     }
 );
 

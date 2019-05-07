@@ -1,3 +1,3 @@
 module.exports = function ms(message) {
-    console.log("Message Recieved");
-}
+  console.log('Message Recieved');
+};
