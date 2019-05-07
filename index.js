@@ -1,3 +1,3 @@
-var init = require('./init')
+var init = require('./inits/init');
 
 init();
