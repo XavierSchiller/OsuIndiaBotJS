@@ -1,7 +1,7 @@
 const embed = require('../embedCreator');
 const utils = require('./utils');
 
-module.exports.GetUserScores = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
+module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
     if (msgargs.length === 0) {
         db.find({
             discordID: msg.author.id

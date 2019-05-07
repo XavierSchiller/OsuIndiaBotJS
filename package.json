@@ -1,30 +1,33 @@
 {
-  "name": "osuindiajs",
-  "version": "1.0.0",
-  "description": "Built Exclusively for OsuIndia",
-  "main": "index.js",
-  "scripts": {
-    "test": "node index.js"
-  },
-  "keywords": [
-    "Osu",
-    "Discord-Bot"
-  ],
-  "author": "XavierSchiller",
-  "license": "ISC",
-  "dependencies": {
-    "eris": "^0.9.0",
-    "nedb": "^1.8.0",
-    "node-osu": "^1.3.2",
-    "sqlite3": "^4.0.4"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/XavierSchiller/OsuIndiaBotJS.git"
-  },
-  "bugs": {
-    "url": "https://github.com/XavierSchiller/OsuIndiaBotJS/issues"
-  },
-  "homepage": "https://github.com/XavierSchiller/OsuIndiaBotJS#readme"
+    "name": "osuindiajs",
+    "version": "1.0.0",
+    "description": "Built Exclusively for OsuIndia",
+    "main": "index.js",
+    "scripts": {
+        "test": "node index.js"
+    },
+    "keywords": [
+        "Osu",
+        "Discord-Bot"
+    ],
+    "author": "XavierSchiller",
+    "license": "ISC",
+    "dependencies": {
+        "eris": "^0.9.0",
+        "nedb": "^1.8.0",
+        "node-osu": "^1.3.2",
+        "sqlite3": "^4.0.4"
+    },
+    "devDependencies": {
+        "eslint": "^5.16.0",
+        "eslint-config-google": "^0.12.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/XavierSchiller/OsuIndiaBotJS.git"
+    },
+    "bugs": {
+        "url": "https://github.com/XavierSchiller/OsuIndiaBotJS/issues"
+    },
+    "homepage": "https://github.com/XavierSchiller/OsuIndiaBotJS#readme"
 }
