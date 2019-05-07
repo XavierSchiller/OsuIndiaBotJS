@@ -11,7 +11,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js:dev": "webpack --config webpack.config.dev.js",
     "build:js:prod": "webpack --config webpack.config.prod.js",
-    "develop": "npm run build:dev && npm run start:bundle:dev --watch",
+    "develop": "npm run build:dev && npm run start:bundle:dev",
     "start": "npm run build:prod && npm run start:bundle:prod",
     "start:bundle:dev": "node ./build/app.bundle.js",
     "start:bundle:prod": "node ./dist/app.bundle.js"
