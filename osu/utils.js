@@ -54,3 +54,12 @@ module.exports.condense = function condense(delim, ...strings) {
 
     return constring;
 }
+
+async function procUser(username, Osu, Discord, channelID, callback) {
+    try {
+        var em = await callback(Osu, username);
+        Discord.createMessage(channelID, em);
+    } catch (err) {
+        Discord.createMessage(channelID, `Something went wrong: ${err}`)
+    }
+}
