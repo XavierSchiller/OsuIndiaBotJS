@@ -1,19 +1,19 @@
-const path = require("path")
-const nodeExternals = require("webpack-node-externals")
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-  target: "node",
-  mode: "production",
-  entry: "./src/index",
+  target: 'node',
+  mode: 'production',
+  entry: './src/index',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "app.bundle.js",
-    libraryTarget: "commonjs2",
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'app.bundle.js',
+    libraryTarget: 'commonjs2',
   },
   externals: [nodeExternals()],
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   module: {
     rules: [
@@ -22,14 +22,14 @@ module.exports = {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
               [
-                "env",
+                '@babel/preset-env',
                 {
                   targets: {
-                    node: "current",
+                    node: '8.10',
                   },
                 },
               ],
@@ -40,4 +40,4 @@ module.exports = {
     ],
   },
   plugins: [new ForkTsCheckerWebpackPlugin()],
-}
+};

@@ -1,5 +1,5 @@
-const Embed = require('../embedCreator');
-const utils = require('./utils');
+const Embed = require('../utils/embedCreator');
+const utils = require('../utils');
 
 module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
   if (msgargs.length === 0) {
@@ -30,13 +30,12 @@ async function procUser(username, Osu, Discord, channelID) {
 
 async function getData(Osu, user) {
   // Get user data.
-  this.userBest = await Osu.getuserBest({
+  userBest = await Osu.getuserBest({
     u: user,
     m: '0',
     limit: 5,
   });
 
-  this.desc = '';
   const beatmapInfo = [];
   let resolvedBeatmapInfo = [];
 
@@ -51,13 +50,16 @@ async function getData(Osu, user) {
 
   // Call desc constructor.
   console.log(userBest[i]);
-  for (var i = 0; i < this.userBest.length; i++) {
-    this.desc += descConstructor(this.userBest[i], resolvedBeatmapInfo[i][0]);
-  }
+  const desc = userBests
+      .map((element, i) => descConstructor(element, resolvedBeatmapInfo[i][0]))
+      .reduce(
+          (oldDesc, descdescVal) => (oldDesc = `${oldDesc}${descdescVal}`),
+          ``
+      );
 
-  if (desc === '') throw 'Description is empty!';
+  if (desc === '') throw new Error('Description is empty!');
 
-  // Create Embed and send back.
+  // Create embed and send back.
   const em = new Embed('', desc);
   em.withAuthor(
       `Top 5 osu! Plays for: ${user}`,

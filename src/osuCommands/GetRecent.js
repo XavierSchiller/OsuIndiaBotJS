@@ -1,5 +1,5 @@
 const Embed = require('../utils/embedCreator');
-const util = require('./utils');
+const util = require('../utils');
 const db = require('../nedb');
 const Osu = require('../osu');
 
@@ -43,15 +43,15 @@ async function getUserScores(user) {
     const Beatmapinfo = await Osu.getBeatmaps({
       b: Scores[0].beatmapId,
     });
+    let desc = `${Beatmapinfo[0].title}+[${
+      Beatmapinfo[0].version
+    }]${util.parseDiff(Scores[0].mods)}\n`;
+    desc += `${Scores[0].maxCombo}/${
+      Beatmapinfo[0].maxCombo
+    } | Acc: ${util.parseAcc(Scores[0].counts)}%`;
+    const em = new Embed('Recent Score for' + user, desc);
+    return em;
   } catch (err) {
     return new Embed('Something Went Wrong', `Error Description:${err}`);
   }
-  let desc = `${Beatmapinfo[0].title}+[${
-    Beatmapinfo[0].version
-  }]${util.parseDiff(Scores[0].mods)}\n`;
-  desc += `${Scores[0].maxCombo}/${
-    Beatmapinfo[0].maxCombo
-  } | Acc: ${util.parseAcc(Scores[0].counts)}%`;
-  const em = new Embed('Recent Score for' + user, desc);
-  return em;
 }

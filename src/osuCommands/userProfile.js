@@ -1,6 +1,6 @@
-const utils = require('./utils');
-const osu = require('./osu');
-const Embed = require('../embedCreator');
+const utils = require('../utils');
+const osu = require('../osu');
+const Embed = require('../utils/embedCreator');
 
 module.exports = async function GetUser(msg, msgargs) {
   if (msgargs.length == 0) {

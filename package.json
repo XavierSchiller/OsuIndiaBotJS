@@ -2,7 +2,7 @@
   "name": "osuindiajs",
   "version": "1.0.0",
   "description": "Built Exclusively for OsuIndia",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
@@ -13,7 +13,8 @@
     "build:js:dev": "webpack --config webpack.config.dev.js",
     "build:js:prod": "webpack --config webpack.config.prod.js",
     "develop": "npm run lint && npm run build:dev && npm run start:bundle:dev",
-    "start": "npm run lint && npm run build:prod && npm run start:bundle:prod",
+    "start": "npm run develop",
+    "dist": "npm run lint && npm run build:prod && npm run start:bundle:prod",
     "start:bundle:dev": "node ./build/app.bundle.js",
     "start:bundle:prod": "node ./dist/app.bundle.js"
   },
