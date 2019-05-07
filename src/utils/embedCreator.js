@@ -1,4 +1,4 @@
-class embed {
+class Embed {
   constructor(title, desc) {
     this.embed = {};
     this.embed.title = title;
@@ -28,4 +28,4 @@ class embed {
     return JSON.stringify(this);
   }
 }
-module.exports = embed;
+module.exports = Embed;

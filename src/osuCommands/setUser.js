@@ -1,11 +1,9 @@
-const Embed = require('../embedCreator');
+const Embed = require('../utils/embedCreator');
 
-module.exports = function setUser(Osu, Discord, msg, msgargs, db) {
+module.exports = async function setUser(Osu, Discord, msg, msgargs, db) {
   const sendstr = new Embed();
-
   // msgargs are seperated by ' ' so 0th arg should be name.
   const osuUserName = msgargs[0];
-
   if (msgargs.length === 0) {
     // Username to set not Specified.
     sendstr.withTitle('Username Confirmation');
@@ -36,9 +34,10 @@ module.exports = function setUser(Osu, Discord, msg, msgargs, db) {
             sendstr.withDesc(`Your username has been set as ${osuUserName}`);
             Discord.createMessage(msg.channel.id, sendstr);
           } else {
-          // TODO:Add additional feilds when inserting the player information.
-          // Implement secondary DB data fetch (One for the Player Data so
-          // that it can be stored locally)(needed?);
+          /** Add additional feilds when inserting the player information.
+           * Implement secondary DB data fetch.
+           * One for the Player Data so that it can be stored locally)(needed?);
+           */
             sendstr.withTitle('Username Confirmation');
             sendstr.withDesc(`Your username has been set as ${osuUserName}`);
             Discord.createMessage(msg.channel.id, sendstr);

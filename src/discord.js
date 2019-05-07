@@ -1,5 +1,4 @@
 const Tokens = require('../config/config.json');
-
 const eris = require('eris');
 
 const Discord = new eris.CommandClient(

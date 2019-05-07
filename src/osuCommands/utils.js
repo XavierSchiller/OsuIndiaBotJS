@@ -1,4 +1,4 @@
-module.exports.parseDiff = function ParseDiff(DiffString) {
+module.exports.parseDiff = function parseDiff(DiffString) {
   // If there's nothing in the Diffstring.
   if (!DiffString) return '+NoMod';
 
@@ -27,7 +27,7 @@ module.exports.parseDiff = function ParseDiff(DiffString) {
   return str;
 };
 
-module.exports.parseAcc = function ParseAcc(accValues) {
+module.exports.parseAcc = function parseAcc(accValues) {
   // total is the sum of all the notes played.
   const total =
     parseInt(accValues['50']) +
