@@ -1,4 +1,5 @@
 const NeDb = require('nedb');
+const Discord = require('./discord');
 
 db = new NeDb({
   filename: '../private/var/Info.db',
