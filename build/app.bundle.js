@@ -87,6 +87,17 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./config/config.json":
+/*!****************************!*\
+  !*** ./config/config.json ***!
+  \****************************/
+/*! exports provided: OsuApiKey, DiscordKey, default */
+/***/ (function(module) {
+
+eval("module.exports = {\"OsuApiKey\":\"foobar\",\"DiscordKey\":\"foobar\"};\n\n//# sourceURL=webpack:///./config/config.json?");
+
+/***/ }),
+
 /***/ "./src/DiscordOsu.json":
 /*!*****************************!*\
   !*** ./src/DiscordOsu.json ***!
@@ -95,17 +106,6 @@ module.exports =
 /***/ (function(module) {
 
 eval("module.exports = {\"FetchUser\":{\"Alias\":[\"user\",\"usr\",\"profile\",\"osu\"],\"ShortDesc\":\"Fetches the User Profile of a given user.\",\"LongDesc\":\"What Long Desc?\",\"ErrorMessage\":\":eyes:\",\"Usage\":\"FetchUser user1 user2\"},\"GetUserBest\":{\"Alias\":[\"top\",\"best\"],\"ShortDesc\":\"Fetches the Best Plays of a given user.\",\"LongDesc\":\"What Long Desc?\",\"ErrorMessage\":\"Wha' did ya do?\",\"Usage\":\"top user1 user2\"},\"GetRecent\":{\"Alias\":[\"recent\",\"rs\",\"r\"],\"ShortDesc\":\"Fetches the Best Plays of a given user.\",\"LongDesc\":\"What Long Desc?\",\"ErrorMessage\":\"Wha' did ya do?\",\"Usage\":\"rs user1 user2\"},\"setUser\":{\"Alias\":[\"set\"],\"ShortDesc\":\"Fetches the Best Plays of a given user.\",\"LongDesc\":\"What Long Desc?\",\"ErrorMessage\":\"Wha' did ya do?\",\"Usage\":\"set user1\"}};\n\n//# sourceURL=webpack:///./src/DiscordOsu.json?");
-
-/***/ }),
-
-/***/ "./src/config.json":
-/*!*************************!*\
-  !*** ./src/config.json ***!
-  \*************************/
-/*! exports provided: OsuApiKey, DiscordKey, default */
-/***/ (function(module) {
-
-eval("module.exports = {\"OsuApiKey\":\"foobar\",\"DiscordKey\":\"foobar\"};\n\n//# sourceURL=webpack:///./src/config.json?");
 
 /***/ }),
 
@@ -129,7 +129,7 @@ eval("\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance insta
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar Tokens = __webpack_require__(/*! ./config.json */ \"./src/config.json\");\n\nvar nodeosu = __webpack_require__(/*! node-osu */ \"node-osu\");\n\nvar eris = __webpack_require__(/*! eris */ \"eris\");\n\nvar CmdConf = __webpack_require__(/*! ./DiscordOsu.json */ \"./src/DiscordOsu.json\");\n\nvar OsuMethods = __webpack_require__(/*! ./osu */ \"./src/osu/index.js\");\n\nvar nedb = __webpack_require__(/*! nedb */ \"nedb\");\n\nvar db = new nedb({\n  filename: \"./Info.db\"\n});\nvar Osu = new nodeosu.Api(Tokens.OsuApiKey, {\n  notFoundAsError: true,\n  completeScores: false\n});\nvar Discord = new eris.CommandClient(Tokens.DiscordKey, {\n  autoreconnect: true\n}, {\n  description: \"A Bot Specifically Designed for Osu!India.\",\n  owner: \"Xav\",\n  prefix: \"`\"\n});\nObject.keys(OsuMethods).forEach(function (func) {\n  Discord.registerCommand(func, function (msg, args) {\n    OsuMethods[func](func, Osu, Discord, msg, args, db);\n  }, {\n    aliases: CmdConf[func].Alias,\n    description: CmdConf[func].ShortDesc,\n    fullDescription: CmdConf[func].LongDesc,\n    usage: CmdConf[func].Usage\n  });\n});\nDiscord.on(\"ready\", function () {\n  console.log(\"Ready!\");\n});\ndb.loadDatabase(function (err) {\n  if (!err) db.ensureIndex({\n    fieldName: \"OsuID\",\n    unique: true\n  });\n  db.ensureIndex({\n    fieldName: \"discordID\",\n    unique: true\n  });\n  console.log(\"Database is Loaded!\");\n  Discord.connect();\n});\n\n//# sourceURL=webpack:///./src/index.ts?");
+eval("\n\nvar Tokens = __webpack_require__(/*! ../config/config.json */ \"./config/config.json\");\n\nvar nodeosu = __webpack_require__(/*! node-osu */ \"node-osu\");\n\nvar eris = __webpack_require__(/*! eris */ \"eris\");\n\nvar CmdConf = __webpack_require__(/*! ./DiscordOsu.json */ \"./src/DiscordOsu.json\");\n\nvar OsuMethods = __webpack_require__(/*! ./osu */ \"./src/osu/index.js\");\n\nvar nedb = __webpack_require__(/*! nedb */ \"nedb\");\n\nvar db = new nedb({\n  filename: \"./var/info.db\"\n});\nvar Osu = new nodeosu.Api(Tokens.OsuApiKey, {\n  notFoundAsError: true,\n  completeScores: false\n});\nvar Discord = new eris.CommandClient(Tokens.DiscordKey, {\n  autoreconnect: true\n}, {\n  description: \"A Bot Specifically Designed for Osu!India.\",\n  owner: \"Xav\",\n  prefix: \"`\"\n});\nObject.keys(OsuMethods).forEach(function (func) {\n  Discord.registerCommand(func, function (msg, args) {\n    OsuMethods[func](func, Osu, Discord, msg, args, db);\n  }, {\n    aliases: CmdConf[func].Alias,\n    description: CmdConf[func].ShortDesc,\n    fullDescription: CmdConf[func].LongDesc,\n    usage: CmdConf[func].Usage\n  });\n});\nDiscord.on(\"ready\", function () {\n  console.log(\"Ready!\");\n});\ndb.loadDatabase(function (err) {\n  if (!err) db.ensureIndex({\n    fieldName: \"OsuID\",\n    unique: true\n  });\n  db.ensureIndex({\n    fieldName: \"discordID\",\n    unique: true\n  });\n  console.log(\"Database is Loaded!\");\n  Discord.connect();\n});\n\n//# sourceURL=webpack:///./src/index.ts?");
 
 /***/ }),
 
