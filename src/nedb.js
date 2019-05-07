@@ -1,17 +1,21 @@
-var nedb = require("nedb"),
-    db = new nedb({
-        filename: "./Info.db"
-    });
+const NeDb = require('nedb');
+const Discord = require('./discord');
+
+db = new NeDb({
+  filename: '../private/var/Info.db',
+});
 
 db.loadDatabase(function(err) {
-    if (!err) db.ensureIndex({
-        fieldName: "OsuID",
-        unique: true
-    });
+  if (!err) {
     db.ensureIndex({
-        fieldName: "discordID",
-        unique: true
+      fieldName: 'OsuID',
+      unique: true,
     });
-    console.log("Database is Loaded!");
-    Discord.connect();
+  }
+  db.ensureIndex({
+    fieldName: 'discordID',
+    unique: true,
+  });
+  console.log('Database is Loaded!');
+  Discord.connect();
 });
