@@ -13,7 +13,6 @@ db.loadDatabase(function(err) {
         unique: true
     });
     console.log("Database is Loaded!");
-    Discord.connect();
 });
 
 module.exports = db;

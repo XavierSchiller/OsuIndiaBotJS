@@ -12,7 +12,7 @@ module.exports = function init() {
 function initEvents() {
     var events = ["messageCreate"];
     events.forEach(event => {
-        Discord.on(event, require("./events/" + event));
+        Discord.on(event, require("../events/" + event));
     })
 }
 

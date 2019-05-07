@@ -20,7 +20,7 @@ module.exports = function osuinit() {
             Discord.createMessage(message.channel.id, em)
         })
     }, {
-        aliases: ["osu", "user", "profile"],
+        aliases: ["top"],
         caseInsensitive: false,
         cooldown: 5,
         cooldownMessage: "Wait for 5 seconds before using this command again!",
@@ -28,28 +28,27 @@ module.exports = function osuinit() {
     })
 
 
-    Discord.registerCommand("getRecent", (message, args) => {
-        x.getRecent(message, args).then(em => {
-            Discord.createMessage(message.channel.id, em)
-        })
+    Discord.registerCommand("getRecent", async(message, args) => {
+        var em = await x.getRecent(message, args)
+        Discord.createMessage(message.channel.id, em)
     }, {
-        aliases: ["osu", "user", "profile"],
+        aliases: ["rs"],
         caseInsensitive: false,
         cooldown: 5,
         cooldownMessage: "Wait for 5 seconds before using this command again!",
         usage: "top username"
-    })
+    });
 
 
-    Discord.registerCommand("setUser", (message, args) => {
-        x.setUser(message, args).then(em => {
-            Discord.createMessage(message.channel.id, em)
-        })
+    Discord.registerCommand("setUser", async(message, args) => {
+        var em = await x.setUser(message, args)
+        Discord.createMessage(message.channel.id, em)
+
     }, {
-        aliases: ["osu", "user", "profile"],
+        aliases: ["set"],
         caseInsensitive: false,
         cooldown: 5,
         cooldownMessage: "Wait for 5 seconds before using this command again!",
         usage: "top username"
-    })
+    });
 }
