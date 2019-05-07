@@ -7,4 +7,4 @@ const Osu = new nodeosu.Api(Tokens.OsuApiKey, {
   completeScores: false,
 });
 
-export default Osu;
+module.exports = Osu;
