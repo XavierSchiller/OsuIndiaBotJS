@@ -1,7 +1,13 @@
 const embed = require('../embedCreator');
 const utils = require('./utils');
 
+<<<<<<< HEAD:osu/GetUserBest.js
 module.exports.GetUserScores = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
+=======
+
+
+module.exports = function GetUserScores(Osu, Discord, msg, msgargs, db) {
+>>>>>>> Move Source Files Into src, Add Tooling:src/osu/GetUserBest.js
     if (msgargs.length === 0) {
         db.find({
             discordID: msg.author.id
