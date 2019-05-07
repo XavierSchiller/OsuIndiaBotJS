@@ -1,7 +1,7 @@
 var embed = require('../embedCreator');
 var util = require('./utils');
 
-module.exports.GetRecent = async function GetRecent(Osu, Discord, msg, msgargs, db) {
+module.exports = async function GetRecent(Osu, Discord, msg, msgargs, db) {
     if (msgargs.length == 0) {
         db.find({
             discordID: msg.author.id
@@ -34,5 +34,3 @@ async function GetUserScores(Osu, user) {
     var em = new embed("Recent Score for" + user, desc)
     return em;
 }
-
-module.exports.userScores = GetUserScores;

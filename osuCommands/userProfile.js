@@ -1,23 +1,25 @@
-var utils = require('./utils')
+var utils = require('./utils');
+var osu = require('./osu');
+
 
 const embed = require('../embedCreator');
-module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
+module.exports = async function GetUser(msg, msgargs) {
     if (msgargs.length == 0) {
         db.find({
             discordID: msg.author.id
         }, function(err, docs) {
             if (!err || !docs)
-                utils.procUser(Osu, Discord, username, channelID, GetUserData)
+                utils.procUser(osu, Discord, username, channelID, GetUserData)
             else
                 Discord.createMessage(msg.channel.id, "Havent Set your ID!")
         })
     } else {
-        utils.procUser(Osu, Discord, username, channelID, GetUserData)
+        utils.procUser(osu, Discord, username, channelID, GetUserData)
     };
 }
 
-async function GetUserData(Osu, user) {
-    let Info = await Osu.getUser({
+async function GetUserData(osu, user) {
+    let Info = await osu.getUser({
         u: user
     });
 
