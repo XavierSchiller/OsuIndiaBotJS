@@ -1,11 +1,11 @@
 # OsuIndiaBotJS
 A Discord Bot written in JS for Osu!India. Expected Usage on ONE single server, made extensible for usage in any other country server.
 
-#Functions
+# Functions
 - Fetches User Profile
 - Fetches User Top Plays
 
-#Roadmap
+# Roadmap
 - Fetch Recent plays.
 - Integrate with a DB. Preferabbly with SQLite. (Since it's only for one server at a time.)
 - Integrate All functions with DB. 
