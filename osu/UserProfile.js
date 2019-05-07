@@ -7,22 +7,13 @@ module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
             discordID: msg.author.id
         }, function(err, docs) {
             if (!err || !docs)
-                procUser(Osu, Discord, docs[0].OsuID, msg.channel.id);
+                utils.procUser(Osu, Discord, username, channelID, GetUserData)
             else
                 Discord.createMessage(msg.channel.id, "Havent Set your ID!")
         })
     } else {
-        procUser(Osu, Discord, msgargs[0], msg.channel.id);
+        utils.procUser(Osu, Discord, username, channelID, GetUserData)
     };
-}
-
-async function procUser(Osu, Discord, username, channelID) {
-    try {
-        var em = await GetUserData(Osu, username);
-        Discord.createMessage(channelID, em);
-    } catch (err) {
-        Discord.createMessage(channelID, `Something went wrong: ${err}`)
-    }
 }
 
 async function GetUserData(Osu, user) {
