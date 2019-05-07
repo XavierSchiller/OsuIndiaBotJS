@@ -4,7 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 module.exports = {
     target: 'node',
     mode: 'development',
-    entry: ['@babel/polyfill', './src/index'],
+    entry: './src/index',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'app.bundle.js',
@@ -23,9 +23,9 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     presets: [
-                        ["env", {
-                            "targets": {
-                                node: "8"
+                        ['env', {
+                            targets: {
+                                node: 'current'
                             },
                         }],
                     ]
