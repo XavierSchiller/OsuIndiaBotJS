@@ -3,10 +3,11 @@ const util = require('../utils');
 const db = require('../clients/nedb');
 const osu = require('../clients/osu');
 // TODO: Switch from CommonJS to ES6 Style imports.
+// https://github.com/XavierSchiller/OsuIndiaBotJS/issues/13
 
 module.exports = async function getRecent(msg, msgargs) {
   const name =
-    msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
+		msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
   return getUserScores(name);
 };
 
