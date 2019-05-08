@@ -1,20 +1,27 @@
-const Discord = require('../discord');
+const Discord = require('../Clients/discord');
 
-module.exports = function init() {
+module.exports = init;
+
+/**
+ * Initalizes the commands and events for the bot and starts it.
+ */
+function init() {
   initCommands();
   initEvents();
-  Discord.connect().catch((err) => {
-    console.log(err);
-  });
-};
-
-function initEvents() {
-  const events = ['messageCreate'];
-  events.forEach((event) => {
-    Discord.on(event, require('../events/' + event));
-  });
+  Discord.start();
 }
 
+/**
+ * Initalizes all Events.
+ */
+function initEvents() {
+  const messageCreate = require('../events/messageCreate');
+  Discord.onEvent('messageCreate', messageCreate);
+}
+
+/**
+ * Initalizes all commands.
+ */
 function initCommands() {
   // get Osu Commands;
   const osuinit = require('./osuinit');
