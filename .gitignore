@@ -1,6 +1,6 @@
 node_modules/
 config.json
-src/private/var/
+private/var/
 build/
 dist/
 coverage/

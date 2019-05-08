@@ -1,7 +1,7 @@
 const NeDb = require('nedb');
 
 const db = new NeDb({
-  filename: '../private/var/Info.db',
+  filename: '../../private/var/Info.db',
 });
 
 db.loadDatabase(function(err) {
