@@ -10,7 +10,7 @@ assignees: ''
 **Link to feeature request issue: ** 
 
 **Changes made**
-* List down the changes made to fix the bug
+* List down the changes made to enab;e thee feature
 
 **New behavior**
 A clear and concise description of what will happen with the bug fixed.
