@@ -1,4 +1,4 @@
-const Tokens = require('../config/config.json');
+const Tokens = require('../configs/config.json');
 
 const nodeosu = require('node-osu');
 
