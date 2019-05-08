@@ -1,7 +1,7 @@
 const Embed = require('../utils/embedCreator');
 const util = require('../utils');
 const db = require('../Clients/nedb');
-const Osu = require('../Clients/osu');
+const osu = require('../Clients/osu');
 
 module.exports = async function getUserScores(msg, msgargs) {
   const name =
@@ -15,7 +15,7 @@ module.exports = async function getUserScores(msg, msgargs) {
  */
 async function getData(user) {
   // Get user data.
-  userBest = await Osu.getuserBest({
+  userBest = await osu.getuserBest({
     u: user,
     m: '0',
     limit: 5,
@@ -26,7 +26,7 @@ async function getData(user) {
 
   // Get beatmap information through promises.
   userBest.forEach((element) => {
-    beatmapInfo.push(Osu.getBeatmaps({b: element.beatmapId}));
+    beatmapInfo.push(osu.getBeatmaps({b: element.beatmapId}));
   });
   // resolve all promises.
   await Promise.all(beatmapInfo).then((bm) => {

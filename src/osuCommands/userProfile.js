@@ -1,36 +1,25 @@
-const utils = require('../utils');
-const osu = require('../Clients/osu');
 const Embed = require('../utils/embedCreator');
+const util = require('../utils');
+const db = require('../Clients/nedb');
+const osu = require('../Clients/osu');
 
-module.exports = async function GetUser(msg, msgargs) {
-  if (msgargs.length == 0) {
-    db.find(
-        {
-          discordID: msg.author.id,
-        },
-        function(err, docs) {
-          if (!err || !docs) {
-            utils.procUser(osu, Discord, username, channelID, getUserData);
-          } else Discord.createMessage(msg.channel.id, 'Havent Set your ID!');
-        }
-    );
-  } else {
-    utils.procUser(osu, Discord, username, channelID, getUserData);
-  }
+module.exports = async function getUser(msg, msgargs) {
+  const name =
+    msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
+  return getUserData(name);
 };
 
 /**
- * 
- * @param {*} osu 
- * @param {*} user 
+ * Adjoining function to getUser to fetch the profile of the user.
+ * @param {*} user
  */
-async function getUserData(osu, user) {
+async function getUserData(user) {
   const Info = await osu.getUser({
     u: user,
   });
 
   /* Constructing the Description*/
-  const desc = utils.condense(
+  const desc = util.condense(
       '\n',
       `Rank:${Info.pp.rank}`,
       `**PP:${Info.pp.raw}**`,

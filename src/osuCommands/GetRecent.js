@@ -1,9 +1,9 @@
 const Embed = require('../utils/embedCreator');
 const util = require('../utils');
 const db = require('../Clients/nedb');
-const Osu = require('../Clients/osu');
+const osu = require('../Clients/osu');
 
-module.exports = async function GetRecent(msg, msgargs) {
+module.exports = async function getRecent(msg, msgargs) {
   const name =
     msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
   return getUserScores(name);
@@ -16,19 +16,21 @@ module.exports = async function GetRecent(msg, msgargs) {
 async function getUserScores(user) {
   console.log(user);
   try {
-    const Scores = await Osu.getUserRecent({
+    const scores = await osu.getUserRecent({
       u: user,
       limit: 1,
     });
-    const Beatmapinfo = await Osu.getBeatmaps({
-      b: Scores[0].beatmapId,
+
+    const beatmapInfo = await osu.getBeatmaps({
+      b: scores[0].beatmapId,
     });
-    let desc = `${Beatmapinfo[0].title}+[${
-      Beatmapinfo[0].version
-    }]${util.parseDiff(Scores[0].mods)}\n`;
-    desc += `${Scores[0].maxCombo}/${
-      Beatmapinfo[0].maxCombo
-    } | Acc: ${util.parseAcc(Scores[0].counts)}%`;
+
+    let desc = `${beatmapInfo[0].title}+[${
+      beatmapInfo[0].version
+    }]${util.parseDiff(scores[0].mods)}\n`;
+    desc += `${scores[0].maxCombo}/${
+      beatmapInfo[0].maxCombo
+    } | Acc: ${util.parseAcc(scores[0].counts)}%`;
     const em = new Embed('Recent Score for' + user, desc);
     return em;
   } catch (err) {
