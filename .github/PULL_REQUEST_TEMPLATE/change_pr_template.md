@@ -1,11 +1,9 @@
----
-name: Change
-about: Merge in a specific change made for a primary goal or feature
-title: "[CHANGE]"
-labels: change
-assignees: ''
+## /** DELETE THIS SECTION AFTER READING */
+* Please prepend the title of the PR with `[NEW]` only if it adds something new.
+* Please prepend the title of the PR with `[UPDATE]` for other cases.
+## /** DELETE THIS SECTION AFTER READING */
 
----
+
 
 **Link to issue: ** If applicable, link an issue
 
