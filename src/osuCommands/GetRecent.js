@@ -1,32 +1,12 @@
 const Embed = require('../utils/embedCreator');
 const util = require('../utils');
-const db = require('../nedb');
-const Osu = require('../osu');
+const db = require('../Clients/nedb');
+const Osu = require('../Clients/osu');
 
-module.exports = function GetRecent(msg, msgargs) {
-  let em;
-  if (msgargs.length == 0) {
-    em = db.find(
-        {
-          discordID: msg.author.id,
-        },
-        (err, docs) => {
-          debugger;
-          if (!err || !docs) {
-            return getUserScores(docs[0].OsuID);
-          } else {
-            return new Embed(
-                'ID Has not been set',
-                'Set your ID to utilize this command!'
-            );
-          }
-        }
-    );
-  } else {
-    em = getUserScores(msgargs[0]);
-  }
-  console.log(em);
-  return em;
+module.exports = async function GetRecent(msg, msgargs) {
+  const name =
+    msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
+  return getUserScores(name);
 };
 
 /**
