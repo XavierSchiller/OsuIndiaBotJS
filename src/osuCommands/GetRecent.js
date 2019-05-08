@@ -14,7 +14,6 @@ module.exports = async function getRecent(msg, msgargs) {
  * @param {string} user
  */
 async function getUserScores(user) {
-  console.log(user);
   try {
     const scores = await osu.getUserRecent({
       u: user,
@@ -31,7 +30,7 @@ async function getUserScores(user) {
     desc += `${scores[0].maxCombo}/${
       beatmapInfo[0].maxCombo
     } | Acc: ${util.parseAcc(scores[0].counts)}%`;
-    const em = new Embed('Recent Score for' + user, desc);
+    const em = new Embed(`Recent Score for ${user}`, desc);
     return em;
   } catch (err) {
     return new Embed('Something Went Wrong', `Error Description:${err}`);

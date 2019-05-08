@@ -22,13 +22,10 @@ async function getData(user) {
   });
 
   const beatmapInfo = [];
-  let resolvedBeatmapInfo = [];
+  const resolvedBeatmapInfo = userBest.map((e) =>
+    osu.getBeatmaps({b: e.beatmapId})
+  );
 
-  // Get beatmap information through promises.
-  userBest.forEach((element) => {
-    beatmapInfo.push(osu.getBeatmaps({b: element.beatmapId}));
-  });
-  // resolve all promises.
   await Promise.all(beatmapInfo).then((bm) => {
     resolvedBeatmapInfo = bm;
   });
