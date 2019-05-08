@@ -1,7 +1,7 @@
 const Embed = require('../utils/embedCreator');
 const util = require('../utils');
-const db = require('../Clients/nedb');
-const Osu = require('../Clients/osu');
+const db = require('../clients/nedb');
+const osu = require('../clients/osu');
 
 module.exports = async function getUserScores(msg, msgargs) {
   const name =
@@ -15,20 +15,17 @@ module.exports = async function getUserScores(msg, msgargs) {
  */
 async function getData(user) {
   // Get user data.
-  userBest = await Osu.getuserBest({
+  userBest = await osu.getuserBest({
     u: user,
     m: '0',
     limit: 5,
   });
 
   const beatmapInfo = [];
-  let resolvedBeatmapInfo = [];
+  const resolvedBeatmapInfo = userBest.map((e) =>
+    osu.getBeatmaps({b: e.beatmapId})
+  );
 
-  // Get beatmap information through promises.
-  userBest.forEach((element) => {
-    beatmapInfo.push(Osu.getBeatmaps({b: element.beatmapId}));
-  });
-  // resolve all promises.
   await Promise.all(beatmapInfo).then((bm) => {
     resolvedBeatmapInfo = bm;
   });
@@ -61,6 +58,7 @@ async function getData(user) {
  * @return {Embed}
  */
 function descConstructor(UserInfo, beatmapInfo) {
+  // TODO: Create an interface for Description construction.
   util.condense(
       '\n',
       `**[${beatmapInfo.title} [${beatmapInfo.version}]](https://osu.ppy.sh/b/${

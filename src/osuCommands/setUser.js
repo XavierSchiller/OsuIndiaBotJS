@@ -1,6 +1,6 @@
 const Embed = require('../utils/embedCreator');
 
-module.exports = async function setUser(Osu, Discord, msg, msgargs, db) {
+module.exports = async function setUser(msg, msgargs) {
   const sendstr = new Embed();
   // msgargs are seperated by ' ' so 0th arg should be name.
   const osuUserName = msgargs[0];
@@ -17,7 +17,7 @@ module.exports = async function setUser(Osu, Discord, msg, msgargs, db) {
         (err, docs) => {
           if (err) console.log(err);
           else if (docs.length > 0) {
-          // Name has been set already, remap to a new name.
+            // Name has been set already, remap to a new name.
             db.update(
                 {
                   // Search by discordID because the users are rarted.
@@ -34,7 +34,7 @@ module.exports = async function setUser(Osu, Discord, msg, msgargs, db) {
             sendstr.withDesc(`Your username has been set as ${osuUserName}`);
             Discord.createMessage(msg.channel.id, sendstr);
           } else {
-          /** Add additional feilds when inserting the player information.
+            /** Add additional feilds when inserting the player information.
            * Implement secondary DB data fetch.
            * One for the Player Data so that it can be stored locally)(needed?);
            */

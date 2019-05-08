@@ -1,11 +1,13 @@
 const Embed = require('../utils/embedCreator');
 const util = require('../utils');
-const db = require('../Clients/nedb');
-const Osu = require('../Clients/osu');
+const db = require('../clients/nedb');
+const osu = require('../clients/osu');
+// TODO: Switch from CommonJS to ES6 Style imports.
+// https://github.com/XavierSchiller/OsuIndiaBotJS/issues/13
 
-module.exports = async function GetRecent(msg, msgargs) {
+module.exports = async function getRecent(msg, msgargs) {
   const name =
-    msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
+		msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
   return getUserScores(name);
 };
 
@@ -14,22 +16,23 @@ module.exports = async function GetRecent(msg, msgargs) {
  * @param {string} user
  */
 async function getUserScores(user) {
-  console.log(user);
   try {
-    const Scores = await Osu.getUserRecent({
+    const scores = await osu.getUserRecent({
       u: user,
       limit: 1,
     });
-    const Beatmapinfo = await Osu.getBeatmaps({
-      b: Scores[0].beatmapId,
+
+    const beatmapInfo = await osu.getBeatmaps({
+      b: scores[0].beatmapId,
     });
-    let desc = `${Beatmapinfo[0].title}+[${
-      Beatmapinfo[0].version
-    }]${util.parseDiff(Scores[0].mods)}\n`;
-    desc += `${Scores[0].maxCombo}/${
-      Beatmapinfo[0].maxCombo
-    } | Acc: ${util.parseAcc(Scores[0].counts)}%`;
-    const em = new Embed('Recent Score for' + user, desc);
+
+    let desc = `${beatmapInfo[0].title}+[${
+      beatmapInfo[0].version
+    }]${util.parseDiff(scores[0].mods)}\n`;
+    desc += `${scores[0].maxCombo}/${
+      beatmapInfo[0].maxCombo
+    } | Acc: ${util.parseAcc(scores[0].counts)}%`;
+    const em = new Embed(`Recent Score for ${user}`, desc);
     return em;
   } catch (err) {
     return new Embed('Something Went Wrong', `Error Description:${err}`);
