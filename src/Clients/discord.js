@@ -22,8 +22,9 @@ const Discord = new eris.CommandClient(
 function addCommand(commandName, functionName, aliases) {
   Discord.registerCommand(
       commandName,
-      (msg, args) => {
-        functionName(msg, args);
+      async (msg, args) => {
+        const em = await functionName(msg, args);
+        Discord.createMessage(msg.channel.id, em);
       },
       {
         aliases: aliases,

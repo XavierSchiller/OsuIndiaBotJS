@@ -9,12 +9,5 @@ module.exports = function osuinit() {
 
   Discord.addCommand('setUser', x.setUser, ['set']);
 
-  Discord.addCommand(
-      'getRecent',
-      async (msg, args) => {
-        const em = await x.getRecent(msg, args);
-        Discord.sendMessage(em, msg.channel.id);
-      },
-      ['rs']
-  );
+  Discord.addCommand('getRecent', x.getRecent, ['rs']);
 };
