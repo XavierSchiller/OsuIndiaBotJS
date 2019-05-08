@@ -1,34 +1,19 @@
 const Embed = require('../utils/embedCreator');
-const utils = require('../utils');
+const util = require('../utils');
+const db = require('../Clients/nedb');
+const Osu = require('../Clients/osu');
 
-module.exports = async function GetUserScores(Osu, Discord, msg, msgargs, db) {
-  if (msgargs.length === 0) {
-    db.find(
-        {
-          discordID: msg.author.id,
-        },
-        function(err, docs) {
-          if (!err || !docs) {
-            procUser(docs[0].OsuID, Osu, Discord, msg.channel.id);
-          } else {
-            Discord.createMessage(msg.channel.id, 'You did not set your ID!');
-          }
-        }
-    );
-  } else procUser(msgargs[0], Osu, Discord, msg.channel.id);
+module.exports = async function getUserScores(msg, msgargs) {
+  const name =
+    msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
+  return getData(name);
 };
 
-async function procUser(username, Osu, Discord, channelID) {
-  try {
-    const em = await getData(Osu, username);
-    Discord.createMessage(channelID, em);
-  } catch (err) {
-    console.log(err);
-    Discord.createMessage(channelID, `Something went wrong: ${err}`);
-  }
-}
-
-async function getData(Osu, user) {
+/**
+ * Fetches the UserData. Adjoining function of GetUserBest.
+ * @param {*} user
+ */
+async function getData(user) {
   // Get user data.
   userBest = await Osu.getuserBest({
     u: user,
@@ -69,8 +54,14 @@ async function getData(Osu, user) {
   return em;
 }
 
+/**
+ * Description Constructor for getData()
+ * @param {Object} UserInfo Object about the UserData;
+ * @param {Object} beatmapInfo Object about the beatmapinfomation
+ * @return {Embed}
+ */
 function descConstructor(UserInfo, beatmapInfo) {
-  utils.condense(
+  util.condense(
       '\n',
       `**[${beatmapInfo.title} [${beatmapInfo.version}]](https://osu.ppy.sh/b/${
         UserInfo.beatmapId

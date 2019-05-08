@@ -1,5 +1,5 @@
 const utils = require('../utils');
-const osu = require('../osu');
+const osu = require('../Clients/osu');
 const Embed = require('../utils/embedCreator');
 
 module.exports = async function GetUser(msg, msgargs) {
@@ -19,6 +19,11 @@ module.exports = async function GetUser(msg, msgargs) {
   }
 };
 
+/**
+ * 
+ * @param {*} osu 
+ * @param {*} user 
+ */
 async function getUserData(osu, user) {
   const Info = await osu.getUser({
     u: user,
