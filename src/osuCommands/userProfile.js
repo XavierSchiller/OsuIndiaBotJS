@@ -1,7 +1,7 @@
 const Embed = require('../utils/embedCreator');
 const util = require('../utils');
-const db = require('../Clients/nedb');
-const osu = require('../Clients/osu');
+const db = require('../clients/nedb');
+const osu = require('../clients/osu');
 
 module.exports = async function getUser(msg, msgargs) {
   const name =
