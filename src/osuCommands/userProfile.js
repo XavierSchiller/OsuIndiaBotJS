@@ -9,6 +9,7 @@ module.exports = async function getUser(msg, msgargs) {
   return getUserData(name);
 };
 
+// TODO: Improve this doc.
 /**
  * Adjoining function to getUser to fetch the profile of the user.
  * @param {*} user

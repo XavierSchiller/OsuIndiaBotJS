@@ -2,6 +2,7 @@ const Embed = require('../utils/embedCreator');
 const util = require('../utils');
 const db = require('../clients/nedb');
 const osu = require('../clients/osu');
+// TODO: Switch from CommonJS to ES6 Style imports.
 
 module.exports = async function getRecent(msg, msgargs) {
   const name =

@@ -58,6 +58,7 @@ async function getData(user) {
  * @return {Embed}
  */
 function descConstructor(UserInfo, beatmapInfo) {
+  // TODO: Create an interface for Description construction.
   util.condense(
       '\n',
       `**[${beatmapInfo.title} [${beatmapInfo.version}]](https://osu.ppy.sh/b/${
