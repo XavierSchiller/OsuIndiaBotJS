@@ -12,4 +12,12 @@ A Discord Bot written in JS for Osu!India. Expected Usage on ONE single server, 
 - Add tracker to display recent scores.
 - Special things for venom.
 
-
+# Bucketlist of things to do:
+- ESLint Checks.
+- Webpack.
+- Require without variables.
+- No duplicates.
+- Casing.
+- use `let` and `const` instead of `var`
+- Stupidity.
+- A few other things unspecified.
