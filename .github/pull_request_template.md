@@ -1,6 +1,8 @@
 ## /** DELETE THIS SECTION AFTER READING */
-* Please prepend the title of the PR with `[NEW]` only if it adds something new.
-* Please prepend the title of the PR with `[UPDATE]` for other cases.
+* If you're creating a bug fix PR, append `?quick_pull=1&template=bug_pr_template.md` to the end of the current PR url.
+* If you're creating a feature request PR, append `?quick_pull=1&template=fr_pr_template.md` to the end of the current PR url.
+* If you're creating a specifc change PR, append `?quick_pull=1&template=change_pr_template.md` to the end of the current PR url.
+* If you're creating any other CR type, delete this section and continue filling the details.
 ## /** DELETE THIS SECTION AFTER READING */
 
 
