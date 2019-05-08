@@ -1,11 +1,8 @@
----
-name: New Feature
-about: Add a new feature to satisfy a feature request issue
-title: "[NEW FEATURE]"
-labels: enhancement
-assignees: ''
+## /** DELETE THIS SECTION AFTER READING */
+Please prepend the title of the PR with `[NEW FEATURE]`.
+## /** DELETE THIS SECTION AFTER READING */
 
----
+
 
 **Link to feeature request issue: ** 
 
