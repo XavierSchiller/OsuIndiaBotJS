@@ -7,7 +7,7 @@
 
 
 
-**Link to issue: ** If applicable, link an issue
+**Link to issue:** If applicable, link an issue
 
 **Changes made**
 * List down the specifics about the change made

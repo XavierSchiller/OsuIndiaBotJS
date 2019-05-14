@@ -9,6 +9,9 @@ Please prepend the title of the PR with `[NEW FEATURE]`.
 **Changes made**
 * List down the changes made to enab;e thee feature
 
+**Specific change CRs:**
+* List specific change CRs that are relevant to the bug fix.
+
 **New behavior**
 A clear and concise description of what will happen with the bug fixed.
 
