@@ -7,7 +7,7 @@ const db = new NeDb({
 db.loadDatabase(function(err) {
   if (!err) {
     db.ensureIndex({
-      fieldName: 'OsuID',
+      fieldName: 'osuID',
       unique: true,
     });
   }
@@ -36,7 +36,31 @@ function findByDiscordID(DiscordID) {
     );
   });
 }
+/**
+ * Inserts/Updates the record into the database.
+ * @param {*} disId Discord ID of the user.
+ * @param {*} osuId Osu ID of the user.
+ */
+function setUser(disId, osuId) {
+  findByDiscordID(DiscordID).then((e) => {
+    if (e.length === 0) {
+      db.insert({osuID: osuId, discordID: disId});
+    } else {
+      db.update(
+          {
+            discordID: disId,
+          },
+          {
+            $set: {
+              osuID: osuId,
+            },
+          }
+      );
+    }
+  });
+}
 
 module.exports = {
   findByDiscordID: findByDiscordID,
+  setUser: setUser,
 };

@@ -7,7 +7,7 @@ const osu = require('../clients/osu');
 
 module.exports = async function getRecent(msg, msgargs) {
   const name =
-		msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
+    msgargs.length === 0 ? await db.findByDiscordID(msg.author.id) : msgargs[0];
   return getUserScores(name);
 };
 
